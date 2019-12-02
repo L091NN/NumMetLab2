@@ -238,6 +238,12 @@ namespace NumMetLab2
             Column3.HeaderText = "v(xi)";
             Column4.HeaderText = "u(xi)";
             Column5.HeaderText = "|u(xi) - v(xi)|";
+
+            labelInfo.Text = "Для решения тестовой задачи использована равномерная сетка с числом разбиений n = " +
+            n.ToString() + "\n \n" + "Задача решена с погрешностью max(|v(xi) - v2(x2i)|) = " +
+            xdifference.ToString() +
+            "\n \n" + "Mаксимальная разность численных решений в общих узлах сетки наблюдается в точке x = " +
+            xPoint.ToString();
         }
     }
 }
