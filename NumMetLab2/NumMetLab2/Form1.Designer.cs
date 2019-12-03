@@ -99,9 +99,8 @@
             this.labelInfo.Location = new System.Drawing.Point(0, 566);
             this.labelInfo.MaximumSize = new System.Drawing.Size(300, 0);
             this.labelInfo.Name = "labelInfo";
-            this.labelInfo.Size = new System.Drawing.Size(231, 21);
+            this.labelInfo.Size = new System.Drawing.Size(0, 21);
             this.labelInfo.TabIndex = 5;
-            this.labelInfo.Text = "Для решения тестовой задачи ";
             this.labelInfo.Visible = false;
             // 
             // buttonInfo

@@ -182,6 +182,8 @@ namespace NumMetLab2
             Column4.HeaderText = "v2(x2i)";
             Column5.HeaderText = "|v(xi) - v2(x2i)|";
 
+            dataGridView1.Rows.Clear();
+
             task = new MainTask();
 
             List<double> ai;
