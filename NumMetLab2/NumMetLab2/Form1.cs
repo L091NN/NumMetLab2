@@ -92,6 +92,95 @@ namespace NumMetLab2
             zedGraphControl1.Invalidate();
         }
 
+        double ExactTestSolve(double x)
+        {
+            double ksi = 0.3;
+
+            if (x <= ksi)
+            {
+                return -0.960308183045240 * Math.Exp(Math.Pow(30.0 / 209.0, 1.0 / 2.0) * x)
+                    + (-1.373025150288094) * Math.Exp(Math.Pow(30.0 / 209.0, -1.0 / 2.0) * x) + 10.0 / 3.0;
+            }
+            else
+            {
+                return -2.459846401499204 * Math.Exp(x) + (-6.258903552613840) * Math.Exp(-x)
+                    + 100.0 * Math.Sin(3 * Math.PI / 10.0) / 9.0;
+            }
+        }
+
+        void DrawTestSolve(List<double> v, int n, ZedGraphControl graph, DataGridView tab)
+        {
+            ZedGraph.PointPairList v_list = new ZedGraph.PointPairList();
+            ZedGraph.PointPairList u_list = new ZedGraph.PointPairList();
+
+            double h = 1.0 / n;
+            double x = 0.0;
+            double exact;
+            double temp;
+
+            for (int i = 0; i < n + 1; i++)
+            {
+                exact = ExactTestSolve(x);
+                u_list.Add(x, exact);
+                v_list.Add(x, v[i]);
+
+                temp = Math.Abs(exact - v[i]);
+
+                tab.Rows.Add(i, x, v[i], exact, temp);
+                x += h;
+            }
+
+            graph.GraphPane.XAxis.Min = -0.01;
+            graph.GraphPane.XAxis.Max = 1.0;
+
+            graph.GraphPane.CurveList.Clear();
+
+            graph.GraphPane.Title = "Решение";
+
+            ZedGraph.LineItem CurveV = graph.GraphPane.AddCurve("v(x)", v_list, colors[1], ZedGraph.SymbolType.None);
+            ZedGraph.LineItem CurveU = graph.GraphPane.AddCurve("u(x)", u_list, colors[3], ZedGraph.SymbolType.None);
+
+            graph.AxisChange();
+            graph.Invalidate();
+        }
+
+        void DrawTestError(List<double> v, int n, ZedGraphControl graph, DataGridView tab)
+        {
+            ZedGraph.PointPairList err_list = new ZedGraph.PointPairList();
+
+            double h = 1.0 / n;
+            double x = 0.0;
+            double eps1 = 0.0;
+            double x_eps1;
+            double exact;
+            double temp;
+
+            for (int i = 0; i < n + 1; i++)
+            {
+                exact = ExactTestSolve(x);
+                temp = Math.Abs(exact - v[i]);
+
+                err_list.Add(x, temp);
+                if (temp > eps1)
+                {
+                    eps1 = temp;
+                    x_eps1 = x;
+                }
+            }
+
+            graph.GraphPane.XAxis.Min = -0.01;
+            graph.GraphPane.XAxis.Max = 1.0;
+
+            graph.GraphPane.CurveList.Clear();
+
+            graph.GraphPane.Title = "Погрешность";
+
+            ZedGraph.LineItem CurveV = graph.GraphPane.AddCurve("|ui-vi|", err_list, colors[1], ZedGraph.SymbolType.None);
+
+            graph.AxisChange();
+            graph.Invalidate();
+
+        }
 
 
         private void buttonExit_Click(object sender, EventArgs e)
