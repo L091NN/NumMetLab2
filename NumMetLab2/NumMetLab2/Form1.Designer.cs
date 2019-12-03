@@ -481,7 +481,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Первая краевая задача";
             this.panelBar.ResumeLayout(false);
             this.panelBar.PerformLayout();
             this.panelBarUp.ResumeLayout(false);
