@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
 using TheMainTask;
+using Laba_2;
 
 namespace NumMetLab2
 {
@@ -34,7 +35,7 @@ namespace NumMetLab2
             buttonBackUpBar.Visible = false;
             SetColors(zedGraphControl1.GraphPane);
             SetColors(zedGraphControl2.GraphPane);
-            SetColors(dataGridView1);
+
 
         }
 
@@ -47,6 +48,7 @@ namespace NumMetLab2
             {
                 v_list.Add(xi[i], vi[i]);
                 u_list.Add(xi[i], ui[i * 2]);
+                if (i % (n / 1000) == 0)
                 dataGridView1.Rows.Add(i, xi[i], vi[i], ui[i * 2], Math.Abs(vi[i] - ui[i * 2]));
             }
 
@@ -108,7 +110,7 @@ namespace NumMetLab2
             }
         }
 
-        void DrawTestSolve(List<double> v, int n, ZedGraphControl graph, DataGridView tab)
+        void DrawTestSolve(double[] v, ZedGraphControl graph, DataGridView tab)
         {
             ZedGraph.PointPairList v_list = new ZedGraph.PointPairList();
             ZedGraph.PointPairList u_list = new ZedGraph.PointPairList();
@@ -125,8 +127,8 @@ namespace NumMetLab2
                 v_list.Add(x, v[i]);
 
                 temp = Math.Abs(exact - v[i]);
-
-                tab.Rows.Add(i, x, v[i], exact, temp);
+                if (i % (n / 1000) == 0)
+                    tab.Rows.Add(i, x, v[i], exact, temp);
                 x += h;
             }
 
@@ -144,16 +146,18 @@ namespace NumMetLab2
             graph.Invalidate();
         }
 
-        void DrawTestError(List<double> v, int n, ZedGraphControl graph, DataGridView tab)
+        double eps1 = 0.0;
+        double x_eps1;
+        void DrawTestError(double[] v, ZedGraphControl graph)
         {
             ZedGraph.PointPairList err_list = new ZedGraph.PointPairList();
 
             double h = 1.0 / n;
             double x = 0.0;
-            double eps1 = 0.0;
-            double x_eps1;
+            eps1 = 0.0;
             double exact;
             double temp;
+            x_eps1 = x;
 
             for (int i = 0; i < n + 1; i++)
             {
@@ -166,6 +170,7 @@ namespace NumMetLab2
                     eps1 = temp;
                     x_eps1 = x;
                 }
+                x += h;
             }
 
             graph.GraphPane.XAxis.Min = -0.01;
@@ -258,11 +263,6 @@ namespace NumMetLab2
 
         }
 
-        private void SetColors(DataGridView grid)
-        {
-            grid.ForeColor = colors[0];
-        }
-
         private void buttonMainSolve_Click(object sender, EventArgs e)
         {
             n = int.Parse(textBoxDiv.Text);
@@ -271,7 +271,11 @@ namespace NumMetLab2
             Column4.HeaderText = "v2(x2i)";
             Column5.HeaderText = "|v(xi) - v2(x2i)|";
 
+
+
             dataGridView1.Rows.Clear();
+
+            dataGridView1.Visible = false;
 
             task = new MainTask();
 
@@ -315,6 +319,8 @@ namespace NumMetLab2
             DrawSolve(xi, vi2, vi);
             DrawError(xi, dif);
 
+            dataGridView1.Visible = true;
+
             labelInfo.Text = "Для решения задачи использована равномерная сетка с числом разбиений n = " +
             n.ToString() + "\n \n" + "Задача решена с погрешностью max(|v(xi) - v2(x2i)|) = " +
             xdifference.ToString() +
@@ -330,11 +336,23 @@ namespace NumMetLab2
             Column4.HeaderText = "u(xi)";
             Column5.HeaderText = "|u(xi) - v(xi)|";
 
+            double[] v = Laba_2.Task.TestTask(n);
+
+            dataGridView1.Rows.Clear();
+
+            dataGridView1.Visible = false;
+            
+
+            DrawTestSolve(v, zedGraphControl2, dataGridView1);
+            DrawTestError(v, zedGraphControl1);
+
+            dataGridView1.Visible = true;
+
             labelInfo.Text = "Для решения тестовой задачи использована равномерная сетка с числом разбиений n = " +
             n.ToString() + "\n \n" + "Задача решена с погрешностью max(|v(xi) - v2(x2i)|) = " +
-            xdifference.ToString() +
+            eps1.ToString() +
             "\n \n" + "Mаксимальная разность численных решений в общих узлах сетки наблюдается в точке x = " +
-            xPoint.ToString();
+            x_eps1.ToString();
         }
     }
 }
