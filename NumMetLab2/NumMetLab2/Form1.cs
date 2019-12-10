@@ -24,7 +24,8 @@ namespace NumMetLab2
             Color.FromArgb (45, 45, 48), //main color ///BALCK///
             Color.FromArgb (239, 139, 81), ///ORANGE///
             Color.FromArgb (241,241,241), ///WHITE///
-            Color.FromArgb (113,48,20)
+            Color.FromArgb (113,48,20),
+            Color.FromArgb (255, 207, 73)///WHITE-ORANGE///
         };
 
         public Form1()
@@ -48,7 +49,7 @@ namespace NumMetLab2
             {
                 v_list.Add(xi[i], vi[i]);
                 u_list.Add(xi[i], ui[i * 2]);
-                if (i % (n / 1000) == 0)
+                if (i % ((n / 1000) + 1) == 0)
                 dataGridView1.Rows.Add(i, xi[i], vi[i], ui[i * 2], Math.Abs(vi[i] - ui[i * 2]));
             }
 
@@ -60,7 +61,7 @@ namespace NumMetLab2
             zedGraphControl2.GraphPane.Title = "Решение";
 
             ZedGraph.LineItem CurveV = zedGraphControl2.GraphPane.AddCurve("v(x)", v_list, colors[1], ZedGraph.SymbolType.None);
-            ZedGraph.LineItem CurveU = zedGraphControl2.GraphPane.AddCurve("v2(x)", u_list, colors[3], ZedGraph.SymbolType.None);
+            ZedGraph.LineItem CurveU = zedGraphControl2.GraphPane.AddCurve("v2(x)", u_list, colors[4], ZedGraph.SymbolType.None);
 
             zedGraphControl2.AxisChange();
             zedGraphControl2.Invalidate();
@@ -140,7 +141,7 @@ namespace NumMetLab2
             graph.GraphPane.Title = "Решение";
 
             ZedGraph.LineItem CurveV = graph.GraphPane.AddCurve("v(x)", v_list, colors[1], ZedGraph.SymbolType.None);
-            ZedGraph.LineItem CurveU = graph.GraphPane.AddCurve("u(x)", u_list, colors[3], ZedGraph.SymbolType.None);
+            ZedGraph.LineItem CurveU = graph.GraphPane.AddCurve("u(x)", u_list, colors[4], ZedGraph.SymbolType.None);
 
             graph.AxisChange();
             graph.Invalidate();
