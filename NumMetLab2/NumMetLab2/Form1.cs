@@ -128,7 +128,7 @@ namespace NumMetLab2
                 v_list.Add(x, v[i]);
 
                 temp = Math.Abs(exact - v[i]);
-                if (i % (n / 1000) == 0)
+                if (i % (n / 1000) + 1 == 0)
                     tab.Rows.Add(i, x, v[i], exact, temp);
                 x += h;
             }
