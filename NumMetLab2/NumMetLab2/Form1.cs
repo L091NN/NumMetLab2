@@ -320,6 +320,12 @@ namespace NumMetLab2
             DrawSolve(xi, vi2, vi);
             DrawError(xi, dif);
 
+            zedGraphControl2.GraphPane.XAxis.Title = "X";
+            zedGraphControl2.GraphPane.YAxis.Title = "U(xi)";
+
+            zedGraphControl1.GraphPane.XAxis.Title = "X";
+            zedGraphControl1.GraphPane.YAxis.Title = "|v(xi) - v2(x2i)|";
+
             dataGridView1.Visible = true;
 
             labelInfo.Text = "Для решения задачи использована равномерная сетка с числом разбиений n = " +
@@ -347,10 +353,16 @@ namespace NumMetLab2
             DrawTestSolve(v, zedGraphControl2, dataGridView1);
             DrawTestError(v, zedGraphControl1);
 
+            zedGraphControl2.GraphPane.XAxis.Title = "X";
+            zedGraphControl2.GraphPane.YAxis.Title = "V(xi)";
+
+            zedGraphControl1.GraphPane.XAxis.Title = "X";
+            zedGraphControl1.GraphPane.YAxis.Title = "|u(xi) - v(xi)|";
+
             dataGridView1.Visible = true;
 
             labelInfo.Text = "Для решения тестовой задачи использована равномерная сетка с числом разбиений n = " +
-            n.ToString() + "\n \n" + "Задача решена с погрешностью max(|v(xi) - v2(x2i)|) = " +
+            n.ToString() + "\n \n" + "Задача решена с погрешностью max(||u(xi) - v(xi)||) = " +
             eps1.ToString() +
             "\n \n" + "Mаксимальная разность численных решений в общих узлах сетки наблюдается в точке x = " +
             x_eps1.ToString();
