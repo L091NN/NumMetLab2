@@ -102,7 +102,7 @@ namespace NumMetLab2
             if (x <= ksi)
             {
                 return -0.960308183045240 * Math.Exp(Math.Pow(30.0 / 209.0, 1.0 / 2.0) * x)
-                    + (-1.373025150288094) * Math.Exp(Math.Pow(30.0 / 209.0, -1.0 / 2.0) * x) + 10.0 / 3.0;
+                    + (-1.373025150288094) * Math.Exp(-Math.Pow(30.0 / 209.0, 1.0 / 2.0) * x) + 10.0 / 3.0;
             }
             else
             {
@@ -128,7 +128,7 @@ namespace NumMetLab2
                 v_list.Add(x, v[i]);
 
                 temp = Math.Abs(exact - v[i]);
-                if (i % (n / 1000) + 1 == 0)
+                if (i % ((n / 1000) + 1) == 0)
                     tab.Rows.Add(i, x, v[i], exact, temp);
                 x += h;
             }
