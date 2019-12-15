@@ -84,8 +84,8 @@ namespace TheMainTask
                 }
                 else if ((E < grid[i + 1]) && (E < grid[i]))
                 {
-                    result = Math.Pow(grid[i + 1], 3.0) -
-                             Math.Pow(grid[i], 3.0) /
+                    result = (Math.Pow(grid[i + 1], 3.0) -
+                             Math.Pow(grid[i], 3.0)) /
                              (3.0 * h);
 
                     di.Add(result);
