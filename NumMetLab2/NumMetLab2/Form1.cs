@@ -70,12 +70,12 @@ namespace NumMetLab2
         void DrawError(List<double> xi, List<double> dif)
         {
             ZedGraph.PointPairList err_list = new ZedGraph.PointPairList();
-            xdifference = xi[1];
-            xPoint = xi[1];
+            xdifference = dif[0];
+            xPoint = xi[0];
             for (int i = 1; i < xi.Count; i++)
             {
                 err_list.Add(xi[i], dif[i]);
-                if(xdifference < dif[i])
+                if (xdifference < dif[i])
                 {
                     xdifference = dif[i];
                     xPoint = xi[i];
@@ -87,7 +87,7 @@ namespace NumMetLab2
 
             zedGraphControl1.GraphPane.CurveList.Clear();
 
-            zedGraphControl1.GraphPane.Title = "Ошибка";
+            zedGraphControl1.GraphPane.Title = "Погрешность";
 
             ZedGraph.LineItem CurveV = zedGraphControl1.GraphPane.AddCurve("error in scheme`s values", err_list, colors[1], ZedGraph.SymbolType.None);
 
@@ -138,7 +138,7 @@ namespace NumMetLab2
 
             graph.GraphPane.CurveList.Clear();
 
-            graph.GraphPane.Title = "Решение";
+            graph.GraphPane.Title = "Погрешность";
 
             ZedGraph.LineItem CurveV = graph.GraphPane.AddCurve("v(x)", v_list, colors[1], ZedGraph.SymbolType.None);
             ZedGraph.LineItem CurveU = graph.GraphPane.AddCurve("u(x)", u_list, colors[4], ZedGraph.SymbolType.None);
@@ -330,7 +330,7 @@ namespace NumMetLab2
 
             labelInfo.Text = "Для решения задачи использована равномерная сетка с числом разбиений n = " +
             n.ToString() + "\n \n" + "Задача решена с погрешностью max(|v(xi) - v2(x2i)|) = " +
-            xdifference.ToString() +
+            dif.Max().ToString() +
             "\n \n" + "Mаксимальная разность численных решений в общих узлах сетки наблюдается в точке x = " +
             xPoint.ToString();
         }
