@@ -138,7 +138,7 @@ namespace NumMetLab2
 
             graph.GraphPane.CurveList.Clear();
 
-            graph.GraphPane.Title = "Погрешность";
+            graph.GraphPane.Title = "Решение";
 
             ZedGraph.LineItem CurveV = graph.GraphPane.AddCurve("v(x)", v_list, colors[1], ZedGraph.SymbolType.None);
             ZedGraph.LineItem CurveU = graph.GraphPane.AddCurve("u(x)", u_list, colors[4], ZedGraph.SymbolType.None);
